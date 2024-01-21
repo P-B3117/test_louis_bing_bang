@@ -13,26 +13,29 @@
 #define Val_Min_POT 0
 #define New_Max_POT 180
 #define New_Min_POT 0
+#define MAX_PWM 2010
+#define MIN_PWM 990
+
 
 Servo feed;
 Servo launch;
 
 int POT_Val = 0;       //est la valeurs du potentiomètre
+int INVERSE_POT_Val = 0;       //est la valeurs du potentiomètre
 
 void setup () {
     Serial.begin(115200);
     pinMode(BUTTON_PIN_1, INPUT);
     pinMode(BUTTON_PIN_2, INPUT);
-    feed.attach(PWM_PIN_1,1000,2000);
-    launch.attach(PWM_PIN_2,1000,2000);
+    feed.attach(PWM_PIN_1,MIN_PWM, MAX_PWM);
+    launch.attach(PWM_PIN_2,MIN_PWM, MAX_PWM);
     
 }
 
 void loop () {
     POT_Val = analogRead(POT_PIN_1);
-    POT_Val = map(POT_Val , Val_Min_POT, Val_Max_POT, New_Min_POT, New_Max_POT);     //va convertir la valeur du potentiomètre en valeurs numériques
-    Serial.print("                  ");
-    Serial.println(POT_Val );    //devrait lire la valeur du potentiomètre
+    POT_Val = map(POT_Val , Val_Min_POT, Val_Max_POT, New_Min_POT, New_Max_POT); 
+    INVERSE_POT_Val = map(POT_Val , Val_Min_POT, Val_Max_POT, New_Max_POT , New_Min_POT);     //va convertir la valeur du potentiomètre en valeurs numériques
 
     if(digitalRead(BUTTON_PIN_2)== LOW)   //lis si le bouton est appuyer
     {
@@ -49,7 +52,7 @@ void loop () {
     if(digitalRead(BUTTON_PIN_1)== LOW)   //lis si le bouton est appuyer
     {
         Serial.println ("Avance roue arrière");    //envoie vroom vroom
-        feed.write(POT_Val );     //change la vitesse
+        feed.write(INVERSE_POT_Val );     //change la vitesse
     }
     else 
     {

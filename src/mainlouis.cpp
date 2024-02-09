@@ -56,7 +56,7 @@ void loop () {
 
     if(digitalRead(BUTTON_PIN_2)== LOW)   //lis si le bouton est appuyer
     {
-        Serial.println ("moteur2 ON     ");    //envoie vroom vroom
+        Serial.println ("moteur 2 ON     ");    //envoie vroom vroom
         
         moteur2.write(POT_Val2 );      //change la vitesse
     }

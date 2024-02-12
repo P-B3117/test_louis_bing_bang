@@ -43,20 +43,17 @@ void setup () {
 }
 
 void loop () {
-    POT_Val1 = analogRead(POT_PIN_1 );
-    POT_Val1 = map(POT_Val1 , Val_Min_POT, Val_Max_POT, New_Min_POT, New_Max_POT); 
-    INVERSE_POT_Val = map(POT_Val1 , Val_Min_POT, Val_Max_POT, New_Max_POT , New_Min_POT);     //va convertir la valeur du potentiomètre en valeurs numériques
-
-    POT_Val2 = analogRead(POT_PIN_2 );
-    POT_Val2 = map(POT_Val2 , Val_Min_POT, Val_Max_POT, New_Min_POT, New_Max_POT); 
+        
  
-    POT_Val3 = analogRead(POT_PIN_3 );
-    POT_Val3 = map(POT_Val3 , Val_Min_POT, Val_Max_POT, New_Min_POT, New_Max_POT); 
 
 
     if(digitalRead(BUTTON_PIN_2)== LOW)   //lis si le bouton est appuyer
     {
+            POT_Val2 = analogRead(POT_PIN_2 );
+    POT_Val2 = map(POT_Val2 , Val_Min_POT, Val_Max_POT, New_Min_POT, New_Max_POT); 
+
         Serial.println ("moteur 2 ON     ");    //envoie vroom vroom
+        Serial.println ((int)POT_Val2);
         
         moteur2.write(POT_Val2 );      //change la vitesse
     }
@@ -69,7 +66,12 @@ void loop () {
 
     if(digitalRead(BUTTON_PIN_1)== LOW)   //lis si le bouton est appuyer
     {
-        Serial.println ("moteur 1 ON    ");    //envoie vroom vroom
+        POT_Val1 = analogRead(POT_PIN_1 );
+    POT_Val1 = map(POT_Val1 , Val_Min_POT, Val_Max_POT, New_Min_POT, New_Max_POT); 
+    INVERSE_POT_Val = map(POT_Val1 , Val_Min_POT, Val_Max_POT, New_Max_POT , New_Min_POT);     //va convertir la valeur du potentiomètre en valeurs numériques
+
+//        Serial.println ("moteur 1 ON    ");    //envoie vroom vroom
+        Serial.println ((int)POT_Val1);
 //        moteur1.write(POT_Val1 );      //change la vitesse
         moteur1.write(INVERSE_POT_Val );     //change la vitesse
     }
@@ -82,7 +84,11 @@ void loop () {
 
     if(digitalRead(BUTTON_PIN_3)== LOW)   //lis si le bouton est appuyer
     {
+            POT_Val3 = analogRead(POT_PIN_3 );
+    POT_Val3 = map(POT_Val3 , Val_Min_POT, Val_Max_POT, New_Min_POT, New_Max_POT); 
+
         Serial.println ("moteur 3 ON    ");    //envoie vroom vroom
+        Serial.print ((int)POT_Val3);
         
         moteur3.write(POT_Val3 );      //change la vitesse
     }

@@ -1,6 +1,7 @@
 // configurer le pwm qui se trouve a la patte 6 et 7 en fonction de les pattes 4 et 5
 #include <Arduino.h>
 #include "ESP32Servo.h"
+#include <math.h>
 //configuration des timer
 
 #define BUTTON_PIN_1 4
@@ -60,7 +61,9 @@ void loop () {
         Serial.print ("   ");
         Serial.println ((int)POT_Val1);
 
-        moteur1.write(map_Val1);      //change la vitesse
+    map_Val1 = ( pow( (map_Val1 / (float)180) , (float)2 ) ) * (float)180;
+
+    moteur1.write(map_Val1);      //change la vitesse
 
     }
     else 
@@ -80,7 +83,9 @@ void loop () {
         Serial.print ("   ");
         Serial.println ((int)POT_Val2);
         
-        moteur2.write(map_Val2);      //change la vitesse
+    map_Val2 = ( pow( (map_Val2 / (float)180) , (float)2 ) ) * (float)180;
+
+    moteur2.write(map_Val2);      //change la vitesse
     }
     else 
     {
@@ -98,10 +103,10 @@ void loop () {
         Serial.print ((int)map_Val3);
         Serial.print ("   ");
         Serial.println ((int)POT_Val3);
+
+    map_Val3 = ( pow( (map_Val3 / (float)180) , (float)2 ) ) * (float)180;
         
-        moteur2.write(map_Val3);      //change la vitesse
-        
-        moteur3.write(map_Val3);      //change la vitesse
+    moteur3.write(map_Val3);      //change la vitesse
     }
     else 
     {

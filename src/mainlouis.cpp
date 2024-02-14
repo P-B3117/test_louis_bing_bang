@@ -13,9 +13,14 @@
 
 #define POT_PIN_1 5
 #define POT_PIN_2 8
-#define POT_PIN_3 12
+#define POT_PIN_3 3 
 
-#define Val_Max_POT 4095
+#define SWITCH_1 10
+#define SWITCH_2 46 
+
+#define Val_Max_POT_1 4095
+#define Val_Max_POT_2 4095
+#define Val_Max_POT_3 4095
 #define Val_Min_POT 0
 #define New_Max_POT 180
 #define New_Min_POT 0
@@ -49,19 +54,37 @@ void setup () {
 }
 
 void loop () {
+
+    if(digitalRead(SWITCH_1)==HIGH)     //sert à gérer la switch 
+    {
+        Serial.println ("SWITCH 1 ON");
+    }
+
+    if(digitalRead(SWITCH_2)==HIGH)
+    {
+        Serial.println ("SWITCH 2 ON");
+    }
         
  
     if(digitalRead(BUTTON_PIN_1)== LOW)   //lis si le bouton est appuyer
     {
     POT_Val1 = analogRead(POT_PIN_1 );
-    map_Val1 = map(POT_Val1 , Val_Min_POT, Val_Max_POT, New_Min_POT, New_Max_POT);    //va convertir la valeur du potentiomètre en valeurs numériques
+    map_Val1 = map(POT_Val1 , Val_Min_POT, Val_Max_POT_1, New_Min_POT, New_Max_POT);    //va convertir la valeur du potentiomètre en valeurs numériques
 
         Serial.print ("moteur 1 ON     ");    //envoie vroom vroom
         Serial.print ((int)map_Val1);
         Serial.print ("   ");
         Serial.println ((int)POT_Val1);
 
+    if(digitalRead(SWITCH_1)==HIGH)     //sert à gérer la switch 
+    {
+        Serial.println ("SWITCH 1 ON");
+        map_Val1 = ( pow( (map_Val1 / (float)180) , (float)2 ) ) * (float)180;
+    }
+    else
+    {
     map_Val1 = ( pow( (map_Val1 / (float)180) , (float)2 ) ) * (float)180;
+    }
 
     moteur1.write(map_Val1);      //change la vitesse
 
@@ -76,7 +99,7 @@ void loop () {
     {
 
     POT_Val2 = analogRead(POT_PIN_2 );
-    map_Val2 = map(POT_Val2 , Val_Min_POT, Val_Max_POT, New_Min_POT, New_Max_POT); 
+    map_Val2 = map(POT_Val2 , Val_Min_POT, Val_Max_POT_2, New_Min_POT, New_Max_POT); 
 
         Serial.print ("moteur 2 ON     ");    //envoie vroom vroom
         Serial.print ((int)map_Val2);
@@ -88,7 +111,7 @@ void loop () {
     moteur2.write(map_Val2);      //change la vitesse
     }
     else 
-    {
+     {
 //        Serial.println ("rien du tout");    //envoie un message temporaire
         moteur2.write(STOP);
     }
@@ -97,7 +120,7 @@ void loop () {
     if(digitalRead(BUTTON_PIN_3)== LOW)   //lis si le bouton est appuyer
     {
     POT_Val3 = analogRead(POT_PIN_2);
-    map_Val3 = map(POT_Val3 , Val_Min_POT, Val_Max_POT, New_Min_POT, New_Max_POT); 
+    map_Val3 = map(POT_Val3 , Val_Min_POT, Val_Max_POT_3, New_Min_POT, New_Max_POT); 
 
         Serial.print ("moteur 2 ON     ");    //envoie vroom vroom
         Serial.print ((int)map_Val3);

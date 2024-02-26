@@ -71,19 +71,25 @@ void loop () {
     POT_Val1 = analogRead(POT_PIN_1 );
     map_Val1 = map(POT_Val1 , Val_Min_POT, Val_Max_POT_1, New_Min_POT, New_Max_POT);    //va convertir la valeur du potentiomètre en valeurs numériques
 
+    
+
+    if(digitalRead(SWITCH_1)==LOW)     //sert à gérer la switch 
+    {
         Serial.print ("moteur 1 ON     ");    //envoie vroom vroom
         Serial.print ((int)map_Val1);
         Serial.print ("   ");
         Serial.println ((int)POT_Val1);
-
-    if(digitalRead(SWITCH_1)==HIGH)     //sert à gérer la switch 
-    {
-        Serial.println ("SWITCH 1 ON");
+        
         map_Val1 = ( pow( (map_Val1 / (float)180) , (float)2 ) ) * (float)180;
     }
     else
     {
-    map_Val1 = ( pow( (map_Val1 / (float)180) , (float)2 ) ) * (float)180;
+        Serial.print ("moteur 1 ON     SWITCH 1 ON      ");    //envoie vroom vroom
+        Serial.print ((int)map_Val1 /10);
+        Serial.print ("   ");
+        Serial.println ((int)POT_Val1 /10);
+
+        map_Val1 = ( pow( (map_Val1 / (float)180) , (float)2 ) ) * (float)180;
     }
 
     moteur1.write(map_Val1);      //change la vitesse
